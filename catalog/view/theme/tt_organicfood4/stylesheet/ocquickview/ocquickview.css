@@ -1,0 +1,119 @@
+#quickview-bg-block {
+	display: none; 
+	background-color : rgba(0,0,0,0.9); 
+	top: 0; 
+	left: 0; 
+	right: 0; 
+	bottom: 0;  
+	margin: auto; 
+	position: fixed; 
+	z-index: 9991;
+}
+.quickview-load-img {  
+	display: none; 
+	position: fixed; 
+	top: 50%; 
+	left: 0; 
+	right: 0; 
+	bottom: 0; 
+	text-align: center; 
+	z-index: 9999; 
+	margin: auto;
+}
+.a-qv-close {
+    position: absolute;
+	z-index: 10001;
+	width: 30px;
+	height: 30px;
+	background: #fff;
+	color: #434343;
+	font-size: 0px;
+	text-align: center;
+	margin-right: -15px;
+	top: 20px;
+	right: 20px;
+	margin-top: -15px;
+	box-shadow:0 0 5px 0 rgba(0, 0, 0, 0.1);
+}
+.a-qv-close::before {
+    content: "\f2c0";
+	font-family: "Ionicons";
+    text-align: center;
+    font-size: 15px;
+    line-height: 30px;
+    font-weight: bold;
+}
+.a-qv-close:hover::before {
+	color:#78a206;
+}
+.qv-button-container { 
+	position: relative;
+}
+#quickview-content .alert{
+	margin: 20px 0;
+}
+#quickview-content {
+	position: fixed;
+    background-color: #fff;
+    display: none;
+    z-index: 9999;
+    padding: 30px;
+    width: 1100px;
+    height: 550px;
+    top: 50%;
+    margin-top: -270px;
+    left: 50%;
+    margin-left: -555px;
+    overflow: auto !important;
+}
+#product2 + div{
+	margin-top: 40px;
+}
+.quickview-container .thumbnails a.thumbnail {
+    pointer-events: none;
+}
+.quickview-container .price-box p {
+	display:inline-block;
+}
+.quickview-container .price-box .special-price span {
+    font-weight: 500;
+}
+.quickview-container .price-box .old-price span {
+    color: #c2c2c2;
+    font-size: 13px !important;
+    color: #c2c2c2;
+    text-decoration: line-through;
+    margin-right: 8px;
+    font-weight: 400;
+}
+.quickview-container  #button-cart2,.quickview-container #button-cart {
+	padding:0 50px;
+	margin:0 20px 10px 0;
+}
+.quickview-container .block-2 .list-unstyled {
+	margin:0 0 30px;
+}
+.quickview-container .additional-images {
+	padding:0 15px;
+}
+.quickview-container .owl-carousel .owl-stage-outer {
+	padding:2px;
+}
+.quickview-container label[for='input-quantity'] {
+	margin:0 20px 0 0;
+}
+.quickview-container .quantity-box {
+	margin:0 20px 0 0;
+}
+.quickview-container .product-zoom-image {
+	overflow:hidden;
+}
+@media(max-width: 1024px){
+	#quickview-content{
+		width: 90%;
+		left: 5%;
+	}
+	.a-qv-close{
+		right: 5%;
+	}
+}

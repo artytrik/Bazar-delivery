@@ -1,0 +1,133 @@
+{% if block3 %}
+	{{ block3 }}
+{% endif %}
+<footer>
+		<div class="footer-static">
+			<div class="container">
+				<div class="container-inner">
+					<div class="row">
+						<div class="col-xs-12 col-sm-12 col-md-3">
+							<div class="col col1">
+								<div class="footer-title"><h2>{{ text_contact }}</h2></div>
+								<div class="footer-content">
+									<div class="logo-footer"><a href="#"><img src="catalog/view/theme/tt_organicfood1/image/logo-footer.png" alt=""></a></div>
+									<p><span>{{ text_address }}</span>{{ address }}</p>
+									<p><span>{{ text_phone }}</span>{{ telephone }}</p>
+									<p><span>{{ text_email }}</span>{{ email }}</p>
+									{% if block5 %}
+										{{ block5 }}
+									{% endif %}
+								</div>
+							</div>
+						</div>
+						<div class="col-xs-12 col-sm-12 col-md-2">
+							<div class="col col2">
+								<div class="footer-title"><h2>{{ text_information }}</h2></div>
+								<div class="footer-content">
+									<ul class="list-unstyled">
+										{% for information in informations %}
+											<li><a href="{{ information.href }}">{{ information.title }}</a></li>
+										{% endfor %}
+										<li><a href="{{ special }}">{{ text_special }}</a></li>
+									</ul>
+								</div>
+							</div>
+						</div>
+						{#<div class="col-xs-12 col-sm-12 col-md-2">
+							<div class="col col3">
+								<div class="footer-title"><h2>{{ text_service }}</h2></div>
+								<div class="footer-content">
+									<ul class="list-unstyled">
+										<li><a href="{{ newsletter }}">{{ text_newsletter }}</a></li>
+										<li><a href="{{ order }}">{{ text_order }}</a></li>
+										<li><a href="{{ sitemap }}">{{ text_sitemap }}</a></li>
+										<li><a href="{{ manufacturer }}">{{ text_manufacturer }}</a></li>
+										<li><a href="{{ special }}">{{ text_special }}</a></li>
+									</ul>
+								</div>
+							</div>
+						</div>#}
+						<div class="col-xs-12 col-sm-12 col-md-2">
+							<div class="col col3">
+								<div class="footer-title"><h2>{{ text_account }}</h2></div>
+								<div class="footer-content">
+									<ul class="list-unstyled">
+										<li><a href="{{ account }}">{{ text_account }}</a></li>
+										<li><a href="{{ order }}">{{ text_order }}</a></li>
+										{#<li><a href="{{ wishlist }}">{{ text_wishlist }}</a></li>
+										<li><a href="{{ newsletter }}">{{ text_newsletter }}</a></li>
+										<li><a href="{{ affiliate }}">{{ text_affiliate }}</a></li>#}
+									</ul>
+								</div>
+							</div>
+						</div>
+						{#<div class="col-sm-12 col-md-3 col-xs-12">
+							<div class="col col4">
+								<div class="footer-title">
+									<h2>{{ text_signup_newsletter }}</h2>
+								</div>
+								<div class="footer-content">
+									{% if block4 %}
+										{{ block4 }}
+									{% endif %}
+								</div>
+							</div>
+						</div>#}
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="footer-bottom">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-5 col-sm-12 col-sms-12">
+						<div id="back-top">{{ text_backtop }}</div>
+						<p class="copyright-text">{{ powered }}</p>
+					</div>
+					<div class="col-md-2 col-sm-12 col-sms-12">
+						
+					</div>
+					<div class="col-md-5 col-sm-12 col-sms-12">
+						{% if block6 %}
+							{{ block6 }}
+						{% endif %}
+					</div>
+				</div>
+			</div>
+		</div>
+</footer>
+<script type="text/javascript">
+$(document).ready(function(){
+	// hide #back-top first
+	$("#back-top").hide();
+	// fade in #back-top
+	$(function () {
+		$(window).scroll(function () {
+			if ($(this).scrollTop() > 300) {
+				$('#back-top').fadeIn();
+			} else {
+				$('#back-top').fadeOut();
+			}
+		});
+		// scroll body to 0px on click
+		$('#back-top').click(function () {
+			$('body,html').animate({scrollTop: 0}, 800);
+			return false;
+		});
+	});
+	if (jQuery(window).width() < 992) {   
+		jQuery('.footer-static .footer-title').click(function(){     
+			jQuery(this).parent('.col').toggleClass('active').siblings().removeClass('active'); 
+			jQuery(this).next('.col .footer-content').toggle(300);
+			jQuery(this).parent('.col.active').siblings().children('.col .footer-content').slideUp(300); 
+		}); 
+		 
+	}
+});
+</script>
+<!--
+OpenCart is open source software and you are free to remove the powered by OpenCart if you want, but its generally accepted practise to make a small donation.
+Please donate via PayPal to donate@opencart.com
+//-->
+</div><!-- wrapper -->
+</body></html>
