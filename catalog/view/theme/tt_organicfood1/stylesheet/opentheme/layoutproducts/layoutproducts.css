@@ -91,12 +91,6 @@
 .product-layout:hover .img-r{
 	opacity: 1;
 }
-.action-links,
-.image img{
-	-webkit-transition: all .7s ease 0s;
-	-moz-transition: all .7s ease 0s;
-	transition: all .7s ease 0s;
-}
 .item-inner {
 	position:relative;
 	display:inline-block;

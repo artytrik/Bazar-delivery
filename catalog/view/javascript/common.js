@@ -383,6 +383,12 @@ var wishlist = {
 
 				if (json['success']) {
 					$('body').before('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+
+					var alertSuccess = document.querySelector(`.alert-success`);
+					
+					setTimeout(function() {
+						alertSuccess.remove();
+					}, 2000);
 				}
 
 				$('#wishlist-total span').html(json['total']);
