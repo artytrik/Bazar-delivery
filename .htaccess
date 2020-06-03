@@ -1,3 +1,7 @@
+RewriteEngine On
+RewriteCond %{SERVER_PORT} !^443$
+RewriteRule .* https://%{SERVER_NAME}%{REQUEST_URI} [R=301,L]
+
 # 1.To use URL Alias you need to be running apache with mod_rewrite enabled.
 
 # 2. In your opencart directory rename htaccess.txt to .htaccess.
@@ -54,3 +58,5 @@ RewriteRule ^([^?]*) index.php?_route_=$1 [L,QSA]
 
 # 7. disable open_basedir limitations
 # php_admin_value open_basedir none
+
+php_value memory_limit 300M

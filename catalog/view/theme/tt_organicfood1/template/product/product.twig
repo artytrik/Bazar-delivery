@@ -144,7 +144,7 @@
                     <h1 class="product-name">
                         {{ heading_title }}
                         {% if weight %}
-						<span> ({{ weight }}{{ weight_class }})</span>
+						    <span> (<span class="product-weight">{{ weight }}</span>{{ weight_class }})</span>
 						{% endif %}
                     </h1>
 					{% if review_status %}
@@ -404,8 +404,8 @@
 								<label class="control-label" for="input-quantity">{{ entry_qty }}</label>
 								<div class="quantity-content">
 									<input type="button" id="plus" value="&#43;" class="form-control"/>
-									<input type="text" name="quantity" value="{{ minimum }}" size="2" id="input-quantity" class="form-control" />					
-									<input type="button" id="minus" value="-" class="form-control" />
+									<input type="text" name="quantity" value="{{ minimum }}" size="2" id="input-quantity" class="form-control" disabled/>					
+									<input type="button" id="minus" value="-" class="form-control" disabled/>
 								</div>
 							</div>
 							<input type="hidden" name="product_id" value="{{ product_id }}" />
@@ -858,31 +858,50 @@
     {% endif %}
 	
 	var minimum = {{ minimum }};
+    var price = parseInt('{{ price }}'.replace(/[^.\d]+/g,""), 10);
+    var weight = parseFloat({{ weight }});
+
 	$("#product-product #input-quantity").change(function(){
 		if ($(this).val() < minimum) {
 		  alert("Minimum Quantity: "+minimum);
 		  $("#product-product #input-quantity").val(minimum);
 		}
 	});
-	// increase number of product
-	function minus(minimum){
-		var currentval = parseInt($("#product-product #input-quantity").val());
-		$("#product-product #input-quantity").val(currentval-1);
-		if($("#product-product #input-quantity").val() <= 0 || $("#product-product #input-quantity").val() < minimum){
-		  alert("Minimum Quantity: "+minimum);
-		  $("#product-product #input-quantity").val(minimum);
-		}
-	};
-	// decrease of product
-	function plus(){
-		var currentval = parseInt($("#product-product #input-quantity").val());
-		$("#product-product #input-quantity").val(currentval+1);
-	};
-	$('#product-product #minus').click(function(){
-		minus(minimum);
+
+    function cnahgeQuantity(operation) {
+        var quantityInput = document.getElementById('input-quantity').value;
+        var currentval = parseInt(quantityInput, 10);
+        var productPrice = document.querySelector('.price-product span');
+        var currentPrice = parseInt(productPrice.textContent, 10);
+        var productWeight = document.querySelector('.product-weight');
+        var currentWeight = parseFloat(productWeight.textContent);
+        var sign = operation === 'plus' ? '+' : '-';
+        var changedNumber = eval(currentval + sign + 1);
+        
+        document.getElementById('input-quantity').value = changedNumber;
+        productPrice.textContent = eval(currentPrice + sign + price);
+        productWeight.textContent = parseFloat(eval(currentWeight + sign + weight).toFixed(1));
+        productPrice.insertAdjacentHTML('beforeend', ' <span class="fa fa-rub"></span>');
+        
+        if (changedNumber >= 10) {
+            document.getElementById('plus').setAttribute("disabled", "true");
+        } else {
+            document.getElementById('plus').removeAttribute("disabled");
+        }
+
+        if (changedNumber <= 1) {
+            document.getElementById('minus').setAttribute("disabled", "true");
+        } else {
+            document.getElementById('minus').removeAttribute("disabled");
+        }
+    }
+
+	$('#product-product #minus').click(function() {
+        cnahgeQuantity('minus');
 	});
-	$('#product-product #plus').click(function(){
-		plus();
+
+	$('#product-product #plus').click(function() {
+        cnahgeQuantity('plus');
 	});
     //--></script>
 {{ footer }} 

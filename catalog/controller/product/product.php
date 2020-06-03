@@ -238,7 +238,7 @@ class ControllerProductProduct extends Controller {
 			$data['manufacturer'] = $product_info['manufacturer'];
 			$data['manufacturers'] = $this->url->link('product/manufacturer/info', 'manufacturer_id=' . $product_info['manufacturer_id']);
 			$data['model'] = $product_info['model'];
-			$data['weight'] = round($product_info['weight'],0);
+			$data['weight'] = $this->weight->format($product_info['weight'], $this->config->get('weight_class_id'), $this->language->get('decimal_point'), $this->language->get('thousand_point'));
 			$data['weight_class'] = $product_info['weight_class'];
 			$data['reward'] = $product_info['reward'];
 			$data['points'] = $product_info['points'];

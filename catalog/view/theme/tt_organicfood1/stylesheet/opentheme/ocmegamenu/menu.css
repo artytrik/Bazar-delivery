@@ -300,10 +300,10 @@
 	min-height: 60px !important;
 }
 .fix-nav .horizontal-menu .ul-top-items .li-top-item .a-top-link {
-	padding: 20px 23px !important;
+	padding: 27px 23px !important;
 }
 @media (max-width: 1199px){
 	.oc-menu.horizontal-menu .ul-top-items .li-top-item .a-top-link {
-		padding:31px 20px 31px 20px !important;
+		padding: 28px 10px !important;
 	}
 }

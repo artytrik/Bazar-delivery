@@ -280,7 +280,7 @@
 	display:none;
 }
 /* tabs product */
-.tt-product { text-align:center; }
+.tt-product { text-align:center;  margin-bottom: 20px;}
 .tab-heading.nav-pills > li.active a:focus,
 .tab-heading.nav-pills > li.active a:hover,
 .tab-heading.nav-pills > li.active a,

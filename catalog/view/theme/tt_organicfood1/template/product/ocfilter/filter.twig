@@ -1,4 +1,4 @@
-<!--<div class="layernavigation-module">	
+<div class="layernavigation-module">	
 	<div class="panel panel-default">
 		{#<div class="panel-heading layered-heading">{{ heading_title }}</div>#}
 		<div class="layered">
@@ -23,7 +23,7 @@
 						</div>
 					{% endif %}
 				</div>
-				<div class="filter-attribute-container filter-price">
+				{#<div class="filter-attribute-container filter-price">
 					<label>Цена (р.)</label>
 					<div class="list-group-item">
 						<div class="filter-price">
@@ -35,7 +35,7 @@
 							</div>
 						</div>
 					</div>
-				</div>
+				</div>#}
 				{% for filter_group in filter_groups %}
 					<div class="filter-attribute-container filter-{{ filter_group.name|lower }}">
 						<label>{{ filter_group.name }}</label>
@@ -148,5 +148,5 @@
             ids = [];
         });
     });
-</script>-->
+</script>
 

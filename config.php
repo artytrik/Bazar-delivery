@@ -3,7 +3,7 @@
 define('HTTP_SERVER', 'http://bazar-delivery.ru/');
 
 // HTTPS
-define('HTTPS_SERVER', 'http://bazar-delivery.ru/');
+define('HTTPS_SERVER', 'https://bazar-delivery.ru/');
 
 // DIR
 define('DIR_APPLICATION', '/var/www/u0776125/bazar.m-n.agency/catalog/');

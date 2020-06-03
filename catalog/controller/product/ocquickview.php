@@ -310,7 +310,7 @@ class ControllerProductOcquickview extends Controller
 
     public function container() {
         $this->load->language('product/ocquickview');
-        $data['ocquickview_loader_img'] = $this->config->get('config_url') . 'image/' . $this->config->get('module_octhemeoption_loader_img');
+        $data['ocquickview_loader_img'] = $this->config->get('config_ssl') . 'image/' . $this->config->get('module_octhemeoption_loader_img');
         $data['ocquickview_status'] = (int) $this->config->get('module_octhemeoption_quickview');
 
         return $this->load->view('product/ocquickview/qvcontainer', $data);

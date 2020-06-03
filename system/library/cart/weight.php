@@ -40,11 +40,17 @@ class Weight {
 	}
 
 	public function format($value, $weight_class_id, $decimal_point = '.', $thousand_point = ',') {
+		$weight = 0;
+
 		if (isset($this->weights[$weight_class_id])) {
-			return number_format($value, 2, $decimal_point, $thousand_point) . $this->weights[$weight_class_id]['unit'];
+			$weight = number_format($value, 2, $decimal_point, $thousand_point) . $this->weights[$weight_class_id]['unit'];
 		} else {
-			return number_format($value, 2, $decimal_point, $thousand_point);
+			$weight = number_format($value, 2, $decimal_point, $thousand_point);
 		}
+
+		$weight = str_replace('.00','',$weight);
+
+		return $weight;
 	}
 
 	public function getUnit($weight_class_id) {

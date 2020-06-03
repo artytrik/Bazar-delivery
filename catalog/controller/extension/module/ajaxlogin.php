@@ -71,7 +71,7 @@ class ControllerExtensionModuleAjaxlogin extends Controller {
 
         $loader_img = $this->config->get('module_ocajaxlogin_loader_img');
         if($loader_img) {
-            $data['loader_img'] = $this->config->get('config_url') . 'image/' . $loader_img;
+            $data['loader_img'] = $this->config->get('config_ssl') . 'image/' . $loader_img;
         }
 
         return $this->load->view('extension/module/ocajaxlogin/ajaxlogin', $data);

@@ -22,7 +22,7 @@ class ControllerExtensionModuleOcajaxlogin extends Controller {
 
         $loader_img = $this->config->get('module_ocajaxlogin_loader_img');
         if($loader_img) {
-            $data['loader_img'] = $this->config->get('config_url') . 'image/' . $loader_img;
+            $data['loader_img'] = $this->config->get('config_ssl') . 'image/' . $loader_img;
         }
 
         if (file_exists(DIR_TEMPLATE . $this->config->get('theme_' . $this->config->get('config_theme') . '_directory') . '/stylesheet/opentheme/ocajaxlogin/css/ocajaxlogin.css')) {
