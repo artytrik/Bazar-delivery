@@ -29,15 +29,15 @@
 						{% endif %}
 				{% endif %}
 			</div>
-            {% if categories %}
+            {#{% if categories %}
                 <h3 class="refine-category">{{ text_refine }}</h3>
-                {#{% if categories|length <= 5 %}#}
+                {% if categories|length <= 5 %}
 					<ul class="list-cate">
 						{% for category in categories %}
 							<li class="list-cate-item"><a href="{{ category.href }}">{{ category.name }}</a></li>
 						{% endfor %}
 					</ul>
-                {#{% else %}
+                {% else %}
                     <div class="row">
                         {% for category in categories|batch((categories|length / 4)|round(1, 'ceil')) %}
                             <div class="col-sm-3">
@@ -50,8 +50,8 @@
                         {% endfor %}
                     </div>
                     <br />
-                {% endif %}#}
-            {% endif %}
+                {% endif %}
+            {% endif %}#}
             <div class="custom-category">
                 {% if products %}
 					{#<div class="category-compare"><a href="{{ compare }}" id="compare-total">{{ text_compare }}</a></div>#}
