@@ -3,7 +3,7 @@
 	margin-bottom:30px;
 }
 .product-grid .caption{
-	padding: 13px 0 0;
+	padding: 13px 0 8px;
 	text-align:center;
 }
 .product-name{	
@@ -163,14 +163,14 @@
 }
 .item-inner .actions .add-to-links {
 	display: flex;
-	justify-content: space-between;
+	justify-content: space-around;
     width:100%;
     text-align: center;
 	background:#fff;
-	display:inline-block;
 	border-top:1px solid #ebebeb;
-	padding:15px 0 0;
-	margin:10px 0 0;
+	padding: 15px 0 0 0;
+	margin: 5px 0 0;
+	box-sizing: border-box;
 }
 .item-inner .add-to-links div {
     display: inline-block;

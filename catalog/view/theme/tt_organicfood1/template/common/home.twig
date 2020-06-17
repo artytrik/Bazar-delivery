@@ -6,3 +6,31 @@
 		{{ column_right }}		
 	</div>
 {{ footer }}
+<script>
+  function cnahgeQuantityTab(operation, quantityInput, id, price, productWeight) {
+	  	var weight = parseFloat(productWeight);
+        var currentval = parseInt(quantityInput, 10);
+        var productPrice = document.querySelector('.price' + id);
+        var currentPrice = parseInt(productPrice.textContent, 10);
+        var currentWeight = document.getElementById('product-weight' + id).textContent;
+        var sign = operation === 'plus' ? '+' : '-';
+        var changedNumber = eval(currentval + sign + 1);
+        
+        document.getElementById('input-quantity-' + id).value = changedNumber;
+        productPrice.textContent = eval(currentPrice + sign + price);
+        document.getElementById('product-weight' + id).textContent = parseFloat(eval(currentWeight + sign + weight).toFixed(1));
+        productPrice.insertAdjacentHTML('beforeend', ' <span class="fa fa-rub"></span>');
+        
+        if (changedNumber >= 10) {
+            document.getElementById('plus' + id).setAttribute("disabled", "true");
+        } else {
+            document.getElementById('plus' + id).removeAttribute("disabled");
+        }
+
+        if (changedNumber <= 1) {
+            document.getElementById('minus' + id).setAttribute("disabled", "true");
+        } else {
+            document.getElementById('minus' + id).removeAttribute("disabled");
+        }
+    }
+</script>

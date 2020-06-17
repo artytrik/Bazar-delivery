@@ -2827,7 +2827,10 @@ header .container {
 	padding:30px 0;
 }
 #input-quantity2, #minus2, #plus2,
-#input-quantity, #minus, #plus {
+#input-quantity, #minus, #plus,
+.input-quantity-tab,
+.input-quantity-plus,
+.input-quantity-minus {
     display: block;
     height: 38px;
 	line-height:38px;
@@ -2846,23 +2849,28 @@ header .container {
     -moz-transition: ease-in-out .3s all;
     transition: ease-in-out .3s all;
 }
-#plus2,#plus {
+#plus2,#plus, .input-quantity-plus {
 	text-align:right;
 }
-#minus2,#minus {
+#minus2,#minus, .input-quantity-minus {
 	text-align:left;
 	font-size:25px;
 }
 #minus2:hover, #plus2:hover,
-#minus:hover, #plus:hover{
+#minus:hover, #plus:hover,
+.input-quantity-plus:hover,
+.input-quantity-minus:hover{
 	color: #78a206;
 }
 #minus:disabled,
-#plus:disabled {
+#plus:disabled,
+.input-quantity-plus:disabled,
+.input-quantity-minus:disabled {
 	color: #e1e1e1;
 }
 #input-quantity2,
 #input-quantity,
+.input-quantity-tab,
 #input-quantity:disabled {
     width: 50px;
 	height: 38px;
