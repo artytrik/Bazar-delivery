@@ -2547,7 +2547,8 @@ header .container {
 .layer-category ul li {
 	list-style:none;
 	display:inline-block;
-	margin-right:6px;
+	margin-right: 10px;
+	margin-bottom: 10px;
 }
 .layer-category ul li:last-child {
 	margin-right: 0;
@@ -2712,7 +2713,7 @@ header .container {
 	padding: 0 10px;
 	height:28px;
 	line-height:27px;
-	margin: 0 5px;
+	margin: 0;
 	text-align: center;
 }
 .pagination{
