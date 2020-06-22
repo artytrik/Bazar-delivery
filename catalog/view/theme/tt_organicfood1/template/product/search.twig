@@ -132,7 +132,7 @@
 										</div>					
 									{% endif %}                								
 									{% if product.price %}
-										<p class="price">
+										<p class="price price price{{ product.product_id }}">
 										{% if not product.special %}
 											{{ product.price }}
 										{% else %}
@@ -142,6 +142,9 @@
 											<span class="price-tax">{{ text_tax }} {{ product.tax }}</span>
 										{% endif %}
 										</p>
+										{% if product.weight %}
+											<span> (<span id="product-weight{{ product.product_id }}">{{ product.weight }}</span>{{ product.weight_class }})</span>
+										{% endif %}
 									{% endif %}
 									{% if product.manufacturer %}
 									<p class="manufacture-product">
@@ -151,15 +154,36 @@
 									<p class="product-des">{{ product.description }}</p>
 									<div class="actions">
 										<div class="add-to-links">
+										<div class="quantity-box">
+											<div class="quantity-content">
+												<input type="button" id="plus{{ product.product_id }}" value="&#43;" class="input-quantity-plus"/>
+												<input type="text" name="quantity" value="1" size="2" id="input-quantity-{{ product.product_id }}" class="form-control input-quantity-tab" />					
+												<input type="button" id="minus{{ product.product_id }}" value="-" class="input-quantity-minus" disabled/>
+											</div>
+											</div>
 											<div class="cart">
-												<button type="button" title="{{ button_cart }}" onclick="cart.add('{{ product.product_id }}', '{{ product.minimum }}')"><span>{{ button_cart }}</span></button>
+												<button class="cart-button{{ product.product_id }}" type="button" title="{{ button_cart }}"><span>{{ button_cart }}</span></button>
 											</div>
-											{#<div class="compare">
-												<button type="button" title="{{ button_compare }}" onclick="compare.add('{{ product.product_id }}');"><span>{{ button_compare }}</span></button>
-											</div>#}
-											<div class="qv-button-container">
-												<button type="button" title="{{ button_quickview }}" onclick="ocquickview.ajaxView('{{ product.href }}')"><span>{{ button_quickview }}</span></button>
-											</div>
+											<script>
+												var oldPrice{{ product.product_id }} = parseInt('{{ product.price }}'.replace(/[^.\d]+/g,""), 10);
+												var plus{{ product.product_id }} = document.getElementById('plus{{ product.product_id }}');
+												var minus{{ product.product_id }} = document.getElementById('minus{{ product.product_id }}');
+												var buttonCart{{ product.product_id }} = document.querySelector('.cart-button{{ product.product_id }}');
+
+												minus{{ product.product_id }}.addEventListener('click', function() {
+													var elem{{ product.product_id }} =  document.getElementById('input-quantity-{{ product.product_id }}').value;
+													cnahgeQuantityTab('minus', elem{{ product.product_id }}, {{ product.product_id }}, oldPrice{{ product.product_id }}, {{ product.weight }});
+												});
+
+												plus{{ product.product_id }}.addEventListener('click', function() {
+													var elem{{ product.product_id }} =  document.getElementById('input-quantity-{{ product.product_id }}').value;
+													cnahgeQuantityTab('plus', elem{{ product.product_id }}, {{ product.product_id }}, oldPrice{{ product.product_id }}, {{ product.weight }});
+												});
+
+												buttonCart{{ product.product_id }}.addEventListener('click', function() {
+													cart.add('{{ product.product_id }}', document.getElementById('input-quantity-{{ product.product_id }}').value);
+												});
+											</script>
 										</div>
 									</div>
 								</div>
@@ -227,3 +251,31 @@ $('select[name=\'category_id\']').on('change', function() {
 $('select[name=\'category_id\']').trigger('change');
 --></script>
 {{ footer }}
+<script>
+  function cnahgeQuantityTab(operation, quantityInput, id, price, productWeight) {
+	  	var weight = parseFloat(productWeight);
+        var currentval = parseInt(quantityInput, 10);
+        var productPrice = document.querySelector('.price' + id);
+        var currentPrice = parseInt(productPrice.textContent, 10);
+        var currentWeight = document.getElementById('product-weight' + id).textContent;
+        var sign = operation === 'plus' ? '+' : '-';
+        var changedNumber = eval(currentval + sign + 1);
+        
+        document.getElementById('input-quantity-' + id).value = changedNumber;
+        productPrice.textContent = eval(currentPrice + sign + price);
+        document.getElementById('product-weight' + id).textContent = parseFloat(eval(currentWeight + sign + weight).toFixed(1));
+        productPrice.insertAdjacentHTML('beforeend', ' <span class="fa fa-rub"></span>');
+        
+        if (changedNumber >= 10) {
+            document.getElementById('plus' + id).setAttribute("disabled", "true");
+        } else {
+            document.getElementById('plus' + id).removeAttribute("disabled");
+        }
+
+        if (changedNumber <= 1) {
+            document.getElementById('minus' + id).setAttribute("disabled", "true");
+        } else {
+            document.getElementById('minus' + id).removeAttribute("disabled");
+        }
+    }
+</script>
