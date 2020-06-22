@@ -1,0 +1,696 @@
+{{ header }}{{ column_left }}
+<div id="content">
+<style type="text/css">
+html {overflow-y: scroll;}
+input[type="radio"], input[type="checkbox"] {
+    margin: 0 5px 3px 0;
+}
+.form-horizontal input {
+    vertical-align: middle;
+}
+.form-horizontal .checkbox, .form-horizontal .radio {
+    padding: 0;
+    min-height: 18px;
+}
+.form-horizontal .well {
+    background-color: #f7f7f7;
+    min-height: auto;
+    overflow: auto;
+    margin-bottom: 0;
+}
+.form-horizontal .well .checkbox, .form-horizontal .well .radio {
+    margin-top: 4px;
+}
+.form-horizontal .well .fa {
+    margin-right: 7px;
+}
+.form-horizontal .checkbox-inline {
+  padding-left: 24px;
+  margin-bottom: 9px;
+  min-height: 18px;
+}
+.radio label, .checkbox label {
+    padding-left: 24px;
+}
+.control-label {
+    font-weight: normal;
+}
+.input-group+.input-group {
+    margin-top: 15px;
+}
+label.btn-default.active, label.btn-default.active:hover {
+    color: #fff;
+    background-color: #1e91cf;
+    border-color: #1978ab;
+}
+label.btn-default:hover {
+    color: #555;
+    background-color: #f7f7f7;
+    border-color: #ccc;
+}
+label.btn-default:active, label.btn-default:active:hover {
+    color: #555;
+    background-color: #f7f7f7;
+    border-color: #ccc;
+}
+</style>
+<div class="page-header">
+  <div class="container-fluid">
+    <div class="pull-right">
+      {% if apply_btn %}
+      <a onclick="$('#apply').val('1'); $('#sbmenu-form').submit();" class="btn btn-success" data-toggle="tooltip" title="{{ button_apply }}" role="button"><i class="fa fa-check"></i> <span class="hidden-sm"> {{ button_apply }}</span></a>
+      {% endif %}
+      <button type="submit" form="sbmenu-form" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa fa-save"></i> <span class="hidden-sm"> {{ button_save }}</span></button>
+      <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
+    <h1>{{ heading_title }}</h1>
+    <ul class="breadcrumb">
+      {% for breadcrumb in breadcrumbs %}
+      <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+      {% endfor %}
+    </ul>
+  </div>
+</div>
+<div class="container-fluid">
+  {% if error_warning %}
+  <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+  </div>
+  {% endif %}
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title"><i class="fa fa-pencil-square-o"></i>
+      {{ text_edit }}
+      {% if name %}
+      {{ '"'~ name ~'"' }}
+      {% endif %}
+      </h3>
+      {% if success %}
+      <div class="sb-apply text-success pull-right"><i class="fa fa-check"></i> {{ success }}</div>
+      {% endif %}
+      {% if error_name %}
+      <div class="text-danger pull-right"><strong>{{ error_name }}</strong></div>
+      {% endif %}
+    </div>
+    <div class="panel-body">
+      <form action="{{ action }}" method="post" enctype="multipart/form-data" id="sbmenu-form" class="form-horizontal">
+        <ul id="settingTab" class="nav nav-tabs" role="tablist">
+          <li><a href="#moduleSetting" role="tab" data-toggle="tab"> {{ tab_module_setting }}</a></li>
+          <li><a href="#menuSetting" role="tab" data-toggle="tab"> {{ tab_menu_setting }}</a></li>
+        </ul>
+        <div class="tab-content">
+          <div id="moduleSetting" class="tab-pane">
+            <p class="lead">{{ tab_module_setting }}</p>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group required">
+                  <label class="col-sm-4 control-label">{{ entry_name }}</label>
+                  <div class="col-sm-8">
+                    <input type="text" name="name" value="{{ name }}" class="form-control" />
+                    {% if error_name %}
+                    <div class="text-danger">{{ error_name }}</div>
+                    {% endif %}
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-4 control-label">{{ entry_status }}</label>
+                  <div class="col-sm-8">
+                    <div class="btn-group btn-group-justified" data-toggle="buttons">
+                      <label class="btn btn-default">
+                        <input type="radio" name="status" value="1" {{ status ? 'checked="checked"' : '' }} />
+                        {{ text_enabled }} </label>
+                      <label class="btn btn-default">
+                        <input type="radio" name="status" value="0" {{ (not status) ? 'checked="checked"' : '' }} />
+                        {{ text_disabled }} </label>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-4 control-label">{{ entry_store }}</label>
+                  <div class="col-sm-8">
+                    <div class="well well-sm">
+                      <div class="checkbox">
+                        <label>
+                          <input type="checkbox" name="sb_module[store_id][]" value="0" {{ (sb_module.store_id  and  (0 in sb_module.store_id)) ? 'checked="checked" ' : '' }} />
+                          {{ default_store }}
+                        </label>
+                      </div>
+                      {% for store in stores %}
+                      <div class="checkbox">
+                        <label>
+                          <input type="checkbox" name="sb_module[store_id][]" value="{{ store.store_id }}" {{ (sb_module.store_id  and  (store.store_id in sb_module.store_id)) ? 'checked="checked" ' : ''}} />
+                          {{ store.name }}
+                        </label>
+                      </div>
+                      {% endfor %}
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-4 control-label">{{ entry_customers }}</label>
+                  <div class="col-sm-8">
+                    <div class="well well-sm" style="max-height:150px;">
+                      <div class="checkbox">
+                        <label>
+                          <input type="checkbox" name="sb_module[all_customers]" value="1" {{ sb_module.all_customers ? 'checked="checked"' : '' }} />
+                          {{ text_all_customers }} </label>
+                      </div>
+                      {% for customer_group in customer_groups %}
+                      <div class="checkbox">
+                        <label>
+                          <input type="checkbox" name="sb_module[customer_group_id][]" value="{{ customer_group.customer_group_id }}" {{ (sb_module.customer_group_id  and  (customer_group.customer_group_id in sb_module.customer_group_id)) ? 'checked="checked" ' : '' }} />
+                          {{ customer_group.name }} </label>
+                      </div>
+                      {% endfor %}
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-4 control-label"><span data-toggle="tooltip" title="{{ help_categories }}">{{ entry_show_cat }}</span></label>
+                  <div class="col-sm-8">
+                    <input type="text" name="sb_module[fcid]" value="" placeholder="{{ text_select }}" class="form-control" />
+                    <div id="cat-loc" class="well well-sm" style="max-height:150px;">
+                      <div class="checkbox">
+                        <label>
+                          <input type="checkbox" name="sb_module[allcats]" value="1" {{ sb_module.allcats ? 'checked="checked"' : '' }} />
+                          {{ text_allcats }} </label>
+                      </div>
+                      {% for category in catlocs %}
+                      <div id="cat-loc-{{ category.category_id }}" style="margin: 2px 6px;"><i class="fa fa-minus-circle"></i> {{ category.name }}
+                        <input type="hidden" name="sb_module[fcid][]" value="{{ category.category_id }}" />
+                      </div>
+                      {% endfor %}
+                    </div>
+                    <select name="sb_module[cat_invert]" class="form-control" style="margin-top: -1px">
+                      {% if sb_module.cat_invert %}
+                      <option value="1" selected="selected">{{ text_show }}</option>
+                      <option value="0">{{ text_hide }}</option>
+                      {% else %}
+                      <option value="1">{{ text_show }}</option>
+                      <option value="0" selected="selected">{{ text_hide }}</option>
+                      {% endif %} 
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="col-sm-4 control-label">{{ entry_box_class }}</label>
+                  <div class="col-sm-8">
+                    <input type="text" name="sb_module[box_class]" value="{{ sb_module.box_class ? sb_module.box_class : 'panel panel-default' }}" class="form-control" />
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-4 control-label">{{ entry_title_class }}</label>
+                  <div class="col-sm-8">
+                    <input type="text" name="sb_module[title_class]" value="{{ sb_module.title_class ? sb_module.title_class : 'panel-heading' }}" class="form-control" />
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-4 control-label">{{ entry_content_class }}</label>
+                  <div class="col-sm-8">
+                    <input type="text" name="sb_module[content_class]" value="{{ sb_module.content_class ? sb_module.content_class : 'menu-body' }}" class="form-control" />
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-4 control-label">{{ entry_css }}</label>
+                  <div class="col-sm-8">
+                    <select name="sb_module[style_status]" class="form-control">
+                      {% if sb_module.style_status %}
+                      <option value="1" selected="selected">{{ text_enabled }}</option>
+                      <option value="0">{{ text_disabled }}</option>
+                       {% else %}
+                      <option value="1">{{ text_enabled }}</option>
+                      <option value="0" selected="selected">{{ text_disabled }}</option>
+                      {% endif %}
+                    </select>
+                    <textarea name="style" class="form-control" rows="8">{{ style }}</textarea>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div id="menuSetting" class="tab-pane">
+            <p class="lead">{{ tab_menu_setting }}</p>
+            <div class="row">
+              <div class="col-lg-6">
+                <div class="form-group">
+                  <label class="col-sm-4 control-label"><span data-toggle="tooltip" title="{{ help_html }}">{{ entry_title }}</span></label>
+                    <div class="col-sm-8">
+                      {% for language in languages %}
+                      <div class="input-group"> <span class="input-group-addon"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}" /></span>
+                        <input type="text" name="sbmenu[{{ language.language_id }}][title]" value='{{ sbmenu[language.language_id].title ? sbmenu[language.language_id].title : '<h3 class="panel-title">Меню</h3>' }}' class="form-control" />
+                      </div>
+                      {% endfor %}
+                    </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-4 control-label">{{ entry_menu_items }}</label>
+                  <div class="col-sm-8">
+                    <select name="sbmenu[menu_type]" class="form-control" onchange="if ($(this).val()=='brands') {$('#brands-config').show(); $('#cats-config').hide();} else {$('#cats-config').show(); $('#brands-config').hide(); if ($(this).val()=='cats') {$('#cats-config').find('>div').first().show();} else {$('#cats-config').find('>div').first().hide();} if ($(this).val()=='current') {$('#current-config').show();} else {$('#current-config').hide();}}">
+                      {% if sbmenu.menu_type  and  sbmenu.menu_type == 'cats' %}
+                      <option value="cats" selected="selected">{{ text_cats }}</option>
+                      {% else %}
+                      <option value="cats">{{ text_cats }}</option>
+                      {% endif %} 
+                      {% if sbmenu.menu_type  and  sbmenu.menu_type == 'current' %}
+                      <option value="current" selected="selected">{{ text_current }}</option>
+                      {% else %}
+                      <option value="current">{{ text_current }}</option>
+                      {% endif %} 
+                      {% if sbmenu.menu_type  and  sbmenu.menu_type == 'parent' %}
+                      <option value="parent" selected="selected">{{ text_main }}</option>
+                      {% else %}
+                      <option value="parent">{{ text_main }}</option>
+                      {% endif %} 
+                      {% if sbmenu.menu_type  and  sbmenu.menu_type == 'brands' %}
+                      <option value="brands" selected="selected">{{ text_brands }}</option>
+                      {% else %}
+                      <option value="brands">{{ text_brands }}</option>
+                      {% endif %} 
+                    </select>
+                  </div>
+                </div>
+                <div id="cats-config" {{ (sbmenu.menu_type  and  sbmenu.menu_type == 'brands') ? 'style="display:none;"' : '' }}>
+                  <div class="form-group" style="padding-top: 0; {{ (not sbmenu.menu_type  or  sbmenu.menu_type == 'cats') ? '' : 'display:none;' }}">
+                    <div class="col-sm-8 col-sm-offset-4">
+                      <input type="text" name="sbmenu[featured_category]" value="" placeholder="{{ text_select }}" class="form-control" />
+                      <div id="sb-fcats" class="well well-sm" style="max-height:150px;">
+                        <div class="checkbox">
+                          <label>
+                            <input type="checkbox" name="sbmenu[allcats]" value="1" {{ sbmenu.allcats ? 'checked="checked"' : '' }} />
+                            {{ text_allcats }} </label>
+                        </div>
+                        {% for category in categories %}
+                        <div id="sb-fcats-{{ category.category_id }}" style="margin: 2px 6px;"><i class="fa fa-minus-circle"></i> {{ category.name }}
+                          <input type="hidden" name="sbmenu[featured_category][]" value="{{ category.category_id }}" />
+                        </div>
+                        {% endfor %}
+                      </div>
+                    </div>
+                  </div>
+                  <div id="current-config" {{ (sbmenu.menu_type  and  sbmenu.menu_type == 'current') ? '' : 'style="display:none;"' }}>
+                    <div class="row">
+                      <div class="col-sm-8 col-sm-offset-4">
+                        <div class="checkbox">
+                          <label>
+                            <input type="checkbox" name="sbmenu[hide_current]" value="1" {{ sbmenu.hide_current ? 'checked="checked"' : '' }} />
+                            {{ text_hide_current }} </label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-sm-4 control-label">{{ entry_sub_limit }}</label>
+                    <div class="col-sm-8">
+                      <input type="text" name="sbmenu[subcat_limit]" placeholder="{{ text_notlimited }}" value="{{ sbmenu.subcat_limit ? sbmenu.subcat_limit : '' }}" class="form-control" />
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-sm-4 control-label">{{ entry_count }}</label>
+                    <div class="col-sm-8">
+                      <select name="sbmenu[count]" class="form-control">
+                        {% if sbmenu.count %}
+                        <option value="1" selected="selected">{{ text_enabled }}</option>
+                        <option value="0">{{ text_disabled }}</option>
+                        {% else %}
+                        <option value="1">{{ text_enabled }}</option>
+                        <option value="0" selected="selected">{{ text_disabled }}</option>
+                        {% endif %} 
+                      </select>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-sm-4 control-label">{{ entry_levels }}</label>
+                    <div class="col-sm-8">
+                      <label class="checkbox-inline">
+                        <input type="checkbox" name="sbmenu[level_1]" value="1" checked="checked" disabled />
+                        {{ text_level_1 }} </label>
+                      <label class="checkbox-inline">
+                        {% if sbmenu.level_2 %}
+                        <input type="checkbox" name="sbmenu[level_2]" value="1" checked="checked" />
+                        {{ text_level_2 }}
+                        {% else %}
+                        <input type="checkbox" name="sbmenu[level_2]" value="1" />
+                        {{ text_level_2 }}
+                        {% endif %} 
+                      </label>
+                      <label class="checkbox-inline">
+                        {% if sbmenu.level_3 %}
+                        <input type="checkbox" name="sbmenu[level_3]" value="1" checked="checked" />
+                        {{ text_level_3 }}
+                         {% else %}
+                        <input type="checkbox" name="sbmenu[level_3]" value="1" />
+                        {{ text_level_3 }}
+                        {% endif %}
+                      </label>
+                      <label class="checkbox-inline">
+                        {% if sbmenu.level_4 %}
+                        <input type="checkbox" name="sbmenu[level_4]" value="1" checked="checked" />
+                        {{ text_level_4 }}
+                        {% else %}
+                        <input type="checkbox" name="sbmenu[level_4]" value="1" />
+                        {{ text_level_4 }}
+                        {% endif %} 
+                      </label>
+                      <label class="checkbox-inline">
+                        {% if sbmenu.level_5 %}
+                        <input type="checkbox" name="sbmenu[level_5]" value="1" checked="checked" />
+                        {{ text_level_5 }}
+                        {% else %}
+                        <input type="checkbox" name="sbmenu[level_5]" value="1" />
+                        {{ text_level_5 }}
+                        {% endif %} 
+                      </label>
+                    </div>
+                  </div>
+                </div>
+                <div id="brands-config" {{ (sbmenu.menu_type  and  sbmenu.menu_type == 'brands') ? '' : 'style="display:none;"' }}>
+                  <div class="form-group" style="padding-top: 0;">
+                    <div class="col-sm-8 col-sm-offset-4">
+                      <input type="text" name="sbmenu[featured_brands]" value="" placeholder="{{ text_select }}" class="form-control" />
+                      <div id="sb-fbrands" class="well well-sm" style="max-height:150px;">
+                        <div class="checkbox">
+                          <label>
+                            <input type="checkbox" name="sbmenu[allbrands]" value="1" {{ sbmenu.allbrands ? 'checked="checked"' : '' }} />
+                            {{ text_all_brands }} </label>
+                        </div>
+                        {% for manufacturer in manufacturers %}
+                        <div id="sb-fbrands-{{ manufacturer.manufacturer_id }}" style="margin: 2px 6px;"><i class="fa fa-minus-circle"></i> {{ manufacturer.name }}
+                          <input type="hidden" name="sbmenu[featured_brands][]" value="{{ manufacturer.manufacturer_id }}" />
+                        </div>
+                        {% endfor %}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group" style="border-top: 1px solid #ededed;">
+                  <label class="col-sm-4 control-label">{{ entry_products_byitem }}</label>
+                  <div class="col-sm-8">
+                    <select name="sbmenu[products_by_item]" class="form-control" onchange="if($(this).val()=='1') {$('#products-config').show();} else {$('#products-config').hide();}">
+                      {% if sbmenu.products_by_item %}
+                      <option value="1" selected="selected">{{ text_enabled }}</option>
+                      <option value="0">{{ text_disabled }}</option>
+                      {% else %}
+                      <option value="1">{{ text_enabled }}</option>
+                      <option value="0" selected="selected">{{ text_disabled }}</option>
+                      {% endif %} 
+                    </select>
+                  </div>
+                </div>
+                <div id="products-config" {{ sbmenu.products_by_item ? '' : 'style="display:none;"'}}>
+                  <div class="row">
+                    <label class="col-sm-4 control-label">{{ entry_sort_order }}</label>
+                    <div class="col-sm-8">
+                      <select name="sbmenu[products_sort]" class="form-control">
+                        {% for sort in sorts %}
+                        {% if sbmenu.products_sort  and  sort.value == sbmenu.products_sort %}
+                        <option value="{{ sort.value }}" selected="selected">{{ sort.name }}</option>
+                        {% else %}
+                        <option value="{{ sort.value }}">{{ sort.name }}</option>
+                        {% endif %} 
+                        {% endfor %}
+                      </select>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-sm-4 control-label">{{ entry_products_limit }}</label>
+                    <div class="col-sm-8">
+                      <input type="text" name="sbmenu[products_limit]" placeholder="{{ text_notlimited }}" value="{{ sbmenu.products_limit ? sbmenu.products_limit : '' }}" class="form-control" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-6">
+                <div class="form-group">
+                  <label class="col-sm-4 control-label">{{ entry_menu_design }}</label>
+                  <div class="col-sm-8">
+                    <select name="sbmenu[menu_design]" class="form-control" onchange="if ($(this).val()=='am') {$('#accordion-config').show(); $('#flyout-config').hide();} else if ($(this).val()=='fm') {$('#flyout-config').show(); $('#accordion-config').hide();} else {$('#accordion-config,#flyout-config').hide();}">
+                      {% if sbmenu.menu_design  and  sbmenu.menu_design == 'am' %}
+                      <option value="am" selected="selected">{{ text_am }}</option>
+                      {% else %}
+                      <option value="am">{{ text_am }}</option>
+                      {% endif %} 
+                      {% if sbmenu.menu_design  and  sbmenu.menu_design == 'fm' %}
+                      <option value="fm" selected="selected">{{ text_fm }}</option>
+                      {% else %}
+                      <option value="fm">{{ text_fm }}</option>
+                      {% endif %} 
+                      {% if sbmenu.menu_design  and  sbmenu.menu_design == 'pm' %}
+                      <option value="pm" selected="selected">{{ text_pm }}</option>
+                      {% else %}
+                      <option value="pm">{{ text_pm }}</option>
+                      {% endif %} 
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-4 control-label">{{ entry_minimized }}</label>
+                  <div class="col-sm-4">
+                    <select name="sbmenu[minimized]" class="form-control">
+                      {% if sbmenu.minimized %}
+                      <option value="1" selected="selected">{{ text_minimized }}</option>
+                      <option value="0">{{ text_expanded }}</option>
+                      {% else %}
+                      <option value="1">{{ text_minimized }}</option>
+                      <option value="0" selected="selected">{{ text_expanded }}</option>
+                      {% endif %} 
+                    </select>
+                  </div>
+                  <div class="col-sm-4">
+                    <div class="checkbox">
+                      <label style="margin-top:8px;">
+                        <input type="checkbox" name="sbmenu[save_view]" value="1" {{ sbmenu.save_view ? 'checked="checked"' : '' }}/>
+                        {{ text_keep }} </label>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-4 control-label">{{ entry_image }}</label>
+                  <div class="col-sm-4">
+                    <select name="sbmenu[item_image]" class="form-control">
+                      {% if sbmenu.item_image %}
+                      <option value="1" selected="selected">{{ text_enabled }}</option>
+                      <option value="0">{{ text_disabled }}</option>
+                      {% else %}
+                      <option value="1">{{ text_enabled }}</option>
+                      <option value="0" selected="selected">{{ text_disabled }}</option>
+                      {% endif %} 
+                    </select>
+                  </div>
+                  <div class="col-sm-2">
+                    <input type="text" name="sbmenu[image_width]" value="{{ sbmenu.image_width ? sbmenu.image_width : '200' }}" class="form-control text-center" />
+                  </div>
+                  <div class="col-sm-2">
+                    <input type="text" name="sbmenu[image_height]" value="{{ sbmenu.image_height ? sbmenu.image_height : '124' }}" class="form-control text-center" />
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-4 control-label">{{ entry_icon }}</label>
+                  <div class="col-sm-4">
+                    <select name="sbmenu[item_icon]" class="form-control">
+                      {% if sbmenu.item_icon %}
+                      <option value="1" selected="selected">{{ text_enabled }}</option>
+                      <option value="0">{{ text_disabled }}</option>
+                      {% else %}
+                      <option value="1">{{ text_enabled }}</option>
+                      <option value="0" selected="selected">{{ text_disabled }}</option>
+                      {% endif %} 
+                    </select>
+                  </div>
+                  <div class="col-sm-2">
+                    <input type="text" name="sbmenu[icon_width]" value="{{ sbmenu.icon_width ? sbmenu.icon_width : '' }}" class="form-control text-center" />
+                  </div>
+                  <div class="col-sm-2">
+                    <input type="text" name="sbmenu[icon_height]" value="{{ sbmenu.icon_height ? sbmenu.icon_height : '' }}" class="form-control text-center" />
+                  </div>
+                </div>
+                <div id="accordion-config" {{ (not sbmenu.menu_design  or  sbmenu.menu_design == 'am') ? '' : 'style="display:none;"' }}>
+                  <div class="form-group" style="border-top: 1px solid #ededed;">
+                    <label class="col-sm-4 control-label">{{ entry_toggle }}</label>
+                    <div class="col-sm-8">
+                      <select name="sbmenu[toggle]" class="form-control">
+                        {% if sbmenu.toggle %}
+                        <option value="1" selected="selected">{{ text_enabled }}</option>
+                        <option value="0">{{ text_disabled }}</option>
+                        {% else %}
+                        <option value="1">{{ text_enabled }}</option>
+                        <option value="0" selected="selected">{{ text_disabled }}</option>
+                        {% endif %} 
+                      </select>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-sm-4 control-label">{{ entry_effect }}</label>
+                    <div class="col-sm-4">
+                      <select name="sbmenu[easing]" class="form-control">
+                        {% for value in easings %}
+                        value  trim(value)
+                        {% if sbmenu.easing  and  value == sbmenu.easing %}
+                        <option value="{{ value }}" selected="selected">{{ value }}</option>
+                        {% else %}
+                        <option value="{{ value }}">{{ value }}</option>
+                        {% endif %} 
+                        {% endfor %}
+                      </select>
+                    </div>
+                    <div class="col-sm-4">
+                      <input type="text" name="sbmenu[easing_d]" value="{{ sbmenu.easing_d ? sbmenu.easing_d : '200' }}" class="form-control text-center" />
+                    </div>
+                  </div>
+                </div>
+                <div id="flyout-config" {{ (sbmenu.menu_design  and  sbmenu.menu_design == 'fm') ? '' : 'style="display:none;"' }}>
+                  <div class="form-group" style="border-top: 1px solid #ededed;">
+                    <label class="col-sm-4 control-label">{{ entry_column }}</label>
+                    <div class="col-sm-8">
+                      <input type="text" name="sbmenu[column]" value="{{ sbmenu.column ? sbmenu.column : '1' }}" class="form-control" onkeyup="if ($(this).val()>1) {$('.column').show();} else {$('.column').hide();}"/>
+                    </div>
+                  </div>
+                  <div class="form-group column" {{ (sbmenu.column  and  not sbmenu.column == '1') ? '' : 'style="display:none;"' }}>
+                    <label class="col-sm-4 control-label">{{ entry_image_position }}</label>
+                    <div class="col-sm-8">
+                      <select name="sbmenu[image_position]" class="form-control">
+                        {% if sbmenu.image_position  and  sbmenu.image_position == 'center' %}
+                        <option value="center" selected="selected">{{ text_center }}</option>
+                        {% else %}
+                        <option value="center">{{ text_center }}</option>
+                        {% endif %} 
+                        {% if sbmenu.image_position  and  sbmenu.image_position == 'left' %}
+                        <option value="left" selected="selected">{{ text_left }}</option>
+                        {% else %}
+                        <option value="left">{{ text_left }}</option>
+                        {% endif %} 
+                        {% if sbmenu.image_position  and  sbmenu.image_position == 'right' %}
+                        <option value="right" selected="selected">{{ text_right }}</option>
+                        {% else %}
+                        <option value="right">{{ text_right }}</option>
+                        {% endif %} 
+                      </select>
+                    </div>
+                  </div>
+                  <div class="form-group column"  {{ (sbmenu.column  and  not sbmenu.column == '1') ? '' : 'style="display:none;"' }}>
+                    <label class="col-sm-4 control-label">{{ entry_content }}</label>
+                    <div class="col-sm-8">
+                      <select name="sbmenu[content_status]" class="form-control">
+                        {% if sbmenu.content_status %}
+                        <option value="1" selected="selected">{{ text_enabled }}</option>
+                        <option value="0">{{ text_disabled }}</option>
+                        {% else %}
+                        <option value="1">{{ text_enabled }}</option>
+                        <option value="0" selected="selected">{{ text_disabled }}</option>
+                        {% endif %} 
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <input type="hidden" name="apply" id="apply" value="0" />
+      </form>
+    </div>
+  </div>
+</div>
+<script type="text/javascript"><!--
+$('.sb-apply').delay(5000).fadeOut(300);
+$('input[name=\'sbmenu[featured_category]\']').autocomplete({
+  source: function(request, response) {
+    $.ajax({
+      url: 'index.php?route=catalog/category/autocomplete&user_token={{ user_token }}&filter_name=' +  encodeURIComponent(request),
+      dataType: 'json',
+      success: function(json) {
+        response($.map(json, function(item) {
+          return {
+            label: item['name'],
+            value: item['category_id']
+          }
+        }));
+      }
+    });
+  },
+  select: function(item) {
+    $('input[name=\'sbmenu[featured_category]\']').val('');
+    
+    $('#sb-fcats-' + item['value']).remove();
+    
+    $('#sb-fcats').append('<div id="sb-fcats-' + item['value'] + '" style="margin: 2px 6px;"><i class="fa fa-minus-circle"></i> ' + item['label'] + '<input type="hidden" name="sbmenu[featured_category][]" value="' + item['value'] + '" /></div>');
+  }
+});
+
+$('#sb-fcats').delegate('.fa-minus-circle', 'click', function() {
+  $(this).parent().remove();
+});
+
+$('input[name=\'sbmenu[featured_brands]\']').autocomplete({
+  source: function(request, response) {
+    $.ajax({
+      url: 'index.php?route=catalog/manufacturer/autocomplete&user_token={{ user_token }}&filter_name=' +  encodeURIComponent(request),
+      dataType: 'json',
+      success: function(json) {
+        response($.map(json, function(item) {
+          return {
+            label: item['name'],
+            value: item['manufacturer_id']
+          }
+        }));
+      }
+    });
+  },
+  select: function(item) {
+    $('input[name=\'sbmenu[featured_brands]\']').val('');
+    
+    $('#sb-fbrands-' + item['value']).remove();
+    
+    $('#sb-fbrands').append('<div id="sb-fbrands-' + item['value'] + '" style="margin: 2px 6px;"><i class="fa fa-minus-circle"></i> ' + item['label'] + '<input type="hidden" name="sbmenu[featured_brands][]" value="' + item['value'] + '" /></div>');
+  }
+});
+
+$('#sb-fbrands').delegate('.fa-minus-circle', 'click', function() {
+  $(this).parent().remove();
+});
+
+$('input[name=\'sb_module[fcid]\']').autocomplete({
+  source: function(request, response) {
+    $.ajax({
+      url: 'index.php?route=catalog/category/autocomplete&user_token={{ user_token }}&filter_name=' +  encodeURIComponent(request),
+      dataType: 'json',
+      success: function(json) {
+        response($.map(json, function(item) {
+          return {
+            label: item['name'],
+            value: item['category_id']
+          }
+        }));
+      }
+    });
+  },
+  select: function(item) {
+    $('input[name=\'sb_module[fcid]\']').val('');
+    $('#cat-loc-' + item['value']).remove();
+    $('#cat-loc').append('<div id="cat-loc-' + item['value'] + '" style="margin: 2px 6px;"><i class="fa fa-minus-circle"></i> ' + item['label'] + '<input type="hidden" name="sb_module[fcid][]" value="' + item['value'] + '" /></div>');
+  }
+});
+
+$('#cat-loc').delegate('.fa-minus-circle', 'click', function() {
+  $(this).parent().remove();
+});
+
+$('label.btn input').each(function() {
+  if ($(this).prop('checked')) {
+    $(this).parent('.btn').addClass('active');
+  };
+});
+//--></script>
+<script type="text/javascript"><!--
+  {% if module_id %}
+  $('#settingTab a').on('click', function(){
+    sessionStorage.setItem('activetab{{ module_id }}', $(this).attr('href'));
+  });
+  {% endif %}
+  if (!sessionStorage.getItem('activetab{{ module_id }}')) {
+    $('#settingTab a:first').tab('show');
+  } else {
+    $('#settingTab a[href=\'' + sessionStorage.getItem('activetab{{ module_id }}') + '\']').tab('show');
+  }
+//--></script>
+{{ footer }}

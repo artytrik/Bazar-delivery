@@ -1,0 +1,279 @@
+<div id="sb-{{ module }}" class="{{ box_class }}">
+  {% if title %}
+  <div class="{{ title_class ? title_class : '' }} {{ minimized ? 'menu-collapsed' : 'menu-expanded' }} toggle-title">{{ title }}</div>
+  {% endif %}
+  <div {{ content_class ? 'class="'~content_class~'"' : '' }} {{ minimized ? 'style="display:none"' : '' }}>
+    <ul class="sb-{{ menu_design }}{{ column == '1' ? ' fm-one' : '' }}">
+      {% for item in items %}
+      <li {{ item.active ? 'class="active"' : '' }}>
+        <a {{ item.current ? '' : 'href="'~item.href~'"' }} class="item-wrapper{{ item.children1 ? ' item-toggle' : '' }}{{ item.current ? ' item-current' : '' }}">
+          {% if icon  and  item.icon %}
+          <div class="item-icon">
+            {% if icon_width  and  icon_height %}
+            <img src="{{ item.icon }}" alt="{{ item.name }}">
+            {% else %}
+            <img src="image/{{ item.icon }}" alt="{{ item.name }}">
+            {% endif %}
+          </div>
+          {% endif %}
+          <div class="item-title">{{ item.name }}</div>
+          {% if count %}
+          <div class="item-count"><span>{{ item.count }}</span></div>
+          {% endif %}
+        </a>
+        {% if item.children1 %}
+        {% if column == '1' %}
+        <ul>
+          <div>
+            {% if image  and  item.thumb %}
+            <li class="item-image"><a {{ item.current ? '' : 'href="'~item.href~'"' }} title="{{ item.name }}"><img src="{{ item.thumb }}" alt="{{ item.name }}"></a></li>
+            {% endif %}
+            {% for child1 in item.children1 %}
+            <li {{ (child1.active  and  child1.children2) ? 'class="active"' : '' }}>
+              <a {{ child1.current ? '' : 'href="'~child1.href~'"' }} class="item-wrapper{{ child1.children2 ? ' item-toggle' : '' }}{{ child1.current ? ' item-current' : '' }}">
+                {% if icon  and  child1.icon %}
+                <div class="item-icon">
+                  {% if icon_width  and  icon_height %}
+                  <img src="{{ child1.icon }}" alt="{{ child1.name }}">
+                  {% else %}
+                  <img src="image/{{ child1.icon }}" alt="{{ child1.name }}">
+                  {% endif %}
+                </div>
+                {% endif %}
+                <div class="item-title{{ icon  and  child1.icon ? '' : ' item-arrow' }}">{{ child1.name }}</div>
+                {% if count  and  not products_by_item %}
+                <div class="item-count"><span>{{ child1.count }}</span></div>
+                {% endif %}
+                {% if products_by_item %}
+                <div class="item-price">
+                  <span>
+                    {% if not child1.special %}
+                    {{ child1.price }}
+                    {% else %}
+                    {{ child1.special }}
+                    {% endif %}
+                  </span>
+                </div>
+                {% endif %}
+              </a>
+              {% if child1.children2 %}
+              <ul>
+                <div>
+                  {% if image  and  child1.thumb %}
+                  <li class="item-image"><a {{ child1.current ? '' : 'href="'~child1.href~'"' }} title="{{ child1.name }}"><img src="{{ child1.thumb }}" alt="{{ child1.name }}"></a></li>
+                  {% endif %}
+                  {% for child2 in child1.children2 %}
+                  <li {{ child2.active  and  child2.children3 ? 'class="active"' : '' }}>
+                    <a {{ child2.current ? '' : 'href="'~child2.href~'"' }} class="item-wrapper{{ child2.children3 ? ' item-toggle' : '' }}{{ child2.current ? ' item-current' : '' }}">
+                      {% if icon  and  child2.icon %}
+                      <div class="item-icon">
+                        {% if icon_width  and  icon_height %}
+                        <img src="{{ child2.icon }}" alt="{{ child2.name }}">
+                        {% else %}
+                        <img src="image/{{ child2.icon }}" alt="{{ child2.name }}">
+                        {% endif %}
+                      </div>
+                      {% endif %}
+                      <div class="item-title{{ (icon  and  child2.icon) ? '' : ' item-arrow' }}">{{ child2.name }}</div>
+                      {% if count %}
+                      <div class="item-count"><span>{{ child2.count }}</span></div>
+                      {% endif %}
+                    </a>
+                    {% if child2.children3 %}
+                    <ul>
+                      <div>
+                        {% if image  and  child2.thumb %}
+                        <li class="item-image"><a {{ child2.current ? '' : 'href="'~child2.href~'"' }} title="{{ child2.name }}"><img src="{{ child2.thumb }}" alt="{{ child2.name }}"></a></li>
+                        {% endif %}
+                        {% for child3 in child2.children3 %}
+                        <li {{ child3.active  and  child3.children4 ? 'class="active"' : '' }}>
+                          <a {{ child3.current ? '' : 'href="'~child3.href~'"' }} class="item-wrapper{{ child3.children4 ? ' item-toggle' : '' }}{{ child3.current ? ' item-current' : '' }}">
+                            {% if icon  and  child3.icon %}
+                            <div class="item-icon">
+                              {% if icon_width  and  icon_height %}
+                              <img src="{{ child3.icon }}" alt="{{ child3.name }}">
+                              {% else %}
+                              <img src="image/{{ child3.icon }}" alt="{{ child3.name }}">
+                              {% endif %}
+                            </div>
+                            {% endif %}
+                            <div class="item-title{{ (icon  and  child3.icon) ? '' : ' item-arrow' }}">{{ child3.name }}</div>
+                            {% if count %}
+                            <div class="item-count"><span>{{ child3.count }}</span></div>
+                            {% endif %}
+                          </a>
+                          {% if child3.children4 %}
+                          <ul>
+                            <div>
+                              {% if image  and  child3.thumb %}
+                              <li class="item-image"><a {{ child3.current ? '' : 'href="'~child3.href~'"' }} title="{{ child3.name }}"><img src="{{ child3.thumb }}" alt="{{ child3.name }}"></a></li>
+                              {% endif %}
+                              {% for child4 in child3.children4 %}
+                              <li>
+                                <a {{ child4.current ? '' : 'href="'~child4.href~'"' }} class="item-wrapper{{ child4.current ? ' item-current' : '' }}">
+                                  {% if icon  and  child4.icon %}
+                                  <div class="item-icon">
+                                    {% if icon_width  and  icon_height %}
+                                    <img src="{{ child4.icon }}" alt="{{ child4.name }}">
+                                    {% else %}
+                                    <img src="image/{{ child4.icon }}" alt="{{ child4.name }}">
+                                    {% endif %}
+                                  </div>
+                                  {% endif %}
+                                  <div class="item-title{{ (icon  and  child4.icon) ? '' : ' item-arrow' }}">{{ child4.name }}</div>
+                                  {% if count %}
+                                  <div class="item-count"><span>{{ child4.count }}</span></div>
+                                  {% endif %}
+                                </a>
+                              </li>
+                            {% endfor %}
+                            </div>
+                          </ul>
+                        {% endif %}
+                        </li>
+                      {% endfor %}
+                      </div>
+                    </ul>
+                  {% endif %}
+                  </li>
+                {% endfor %}
+                </div>
+              </ul>
+            {% endif %}
+            </li>
+          {% endfor %}
+          </div>
+        </ul>
+      {% else %}
+        <div class="fm-container">
+          <ul>
+            {% for children1 in rray_chunk %}
+            <div>
+              {% for child1 in children1 %}
+              <li {{ child1.active  and  child1.children2 ? 'class="active"' : '' }}>
+                {% if image  and  child1.thumb %}
+                <div class="item-image img-{{ image_position }}"><a {{ child1.current ? '' : 'href="'~child1.href~'"' }} title="{{ child1.name }}"><img src="{{ child1.thumb }}" alt="{{ child1.name }}"></a></div>
+                {% endif %}
+                <div>
+                  <a {{ child1.current ? '' : 'href="'~child1.href~'"' }} class="item-wrapper{{ child1.current ? ' item-current' : '' }}">
+                    {% if icon  and  child1.icon %}
+                    <div class="item-icon">
+                      {% if icon_width  and  icon_height %}
+                      <img src="{{ child1.icon }}" alt="{{ child1.name }}">
+                      {% else %}
+                      <img src="image/{{ child1.icon }}" alt="{{ child1.name }}">
+                      {% endif %}
+                    </div>
+                    {% endif %}
+                    <div class="item-title{{ (icon  and  child1.icon) ? '' : ' item-arrow' }}">{{ child1.name }}
+                    {% if count  and  not products_by_item %}
+                    <div class="item-count"><span>{{ child1.count }}</span></div>
+                    {% endif %}
+                    {% if products_by_item %}
+                    <div class="item-price">
+                      <span>
+                        {% if not child1.special %}
+                        {{ child1.price }}
+                        {% else %}
+                        {{ child1.special }}
+                        {% endif %}
+                      </span>
+                    </div>
+                    {% endif %} 
+                    </div>
+                  </a>
+                  {% if child1.children2 %}
+                  <ul>
+                    <div>
+                      {% for child2 in child1 %}
+                      <li>
+                        <a {{ child2.current ? '' : 'href="'~child2.href~'"' }} class="list-item-wrapper{{ child2.current ? ' item-current' : '' }}">
+                          {{ child2.name }}
+                        </a>
+                      </li>
+                      {% endfor %}
+                    </div>
+                  </ul>
+                  {% endif %}
+                </div>
+              </li>
+              {% endfor %}
+            </div>
+            {% endfor %}
+            {% if content_status  and  item.content %}
+            <div class="fm-content">
+              <div>{{ item.content }}</div>
+            </div>
+            {% endif %}
+          </ul>
+        </div>
+      {% endif %}
+      {% endif %}
+      </li>
+    {% endfor %}
+    </ul>
+  </div>
+</div>
+
+<script type="text/javascript"><!--
+$('#sb-{{ module }} ul.sb-fm.fm-one li > a.item-wrapper').hover(function() {
+  var li = $(this).closest('li');
+  li.siblings('.active').removeClass('active');
+});
+
+$(window).on('resize', function() {
+  var container = $('#sb-{{ module }}').closest('.container').width();
+  var menu = $('#sb-{{ module }}').outerWidth();
+  $('#sb-{{ module }} .fm-container').outerWidth(container-menu);
+}).resize();
+
+$('#sb-{{ module }} .sb-fm, #sb-{{ module }} .sb-fm.fm-one ul>div').menuAim({
+  submenuDirection: $('#sb-{{ module }}').parents().is('#column-right') ? 'left' : 'right',
+  activate: function(item){
+    var height = $(item).parent('ul.sb-fm').height();
+    $(item).find('>a.item-toggle').next('.fm-container').find('>ul').css('min-height',height);
+
+    $(item).find('>a.item-toggle').next().show();
+    $(item).siblings().find('>a.item-toggle').next().hide();
+  },
+  deactivate: function(item){
+    $(item).find('>a.item-toggle').next().fadeOut(300);
+  },
+  exitMenu: function(item){
+    $(item).find('.fm-container:visible').delay(700).fadeOut(300);
+    return true;
+  }
+});
+
+var toggle = $('#sb-{{ module }} .toggle-title');
+
+if ({{ save_view }}) {
+  if (!localStorage.getItem('sb-{{ module }}')) {
+    if ({{ minimized }}) {
+      localStorage.setItem('sb-{{ module }}', 'collapsed');
+    } else {
+      localStorage.setItem('sb-{{ module }}', 'expanded');
+    }
+  }
+
+  $(toggle).click(function() {
+    $(this).toggleClass('menu-expanded menu-collapsed').next().slideToggle(300);
+    if ($(this).hasClass('menu-expanded')) {
+      localStorage.setItem('sb-{{ module }}', 'expanded');
+    } else {
+      localStorage.setItem('sb-{{ module }}', 'collapsed');
+    }
+  });
+
+  if (localStorage.getItem('sb-{{ module }}') == 'expanded') { 
+    toggle.addClass('menu-expanded').removeClass('menu-collapsed').next().show();
+  } else {
+    toggle.addClass('menu-collapsed').removeClass('menu-expanded').next().hide();
+  }
+} else {
+  localStorage.removeItem('sb-{{ module }}');
+  $(toggle).click(function() {
+    $(this).toggleClass('menu-expanded menu-collapsed').next().slideToggle(300);
+  });
+}
+//--></script>
