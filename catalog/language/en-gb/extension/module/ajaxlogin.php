@@ -1,25 +1,25 @@
 <?php
 
 // Heading
-$_['heading_title']  = 'Ajax Login';
+$_['heading_title']  = 'Авторизация';
 
 // Text
-$_['text_account']                 = 'Account';
-$_['text_login']                   = 'Login';
-$_['text_new_customer']            = 'New Customer';
-$_['text_register']                = 'Register Account';
-$_['text_register_account']        = 'By creating an account you will be able to shop faster, be up to date on an order\'s status, and keep track of the orders you have previously made.';
-$_['text_returning_customer']      = 'Returning Customer';
-$_['text_i_am_returning_customer'] = 'I am a returning customer';
-$_['text_forgotten']               = 'Forgotten Password';
-$_['button_register_link']         = 'Create an account';
-$_['success_message']              = 'Congratulation! Login Successfully';
+$_['text_account']                 = 'Личный Кабинет';
+$_['text_login']                   = 'Авторизация';
+$_['text_new_customer']            = 'Новый клиент';
+$_['text_register']                = 'Регистрация';
+$_['text_register_account']        = 'Создание учетной записи поможет покупать быстрее. Вы сможете контролировать состояние заказа, а также просматривать заказы сделанные ранее.';
+$_['text_returning_customer']      = 'Зарегистрированный клиент';
+$_['text_i_am_returning_customer'] = 'Зарегистрированный клиент';
+$_['text_forgotten']               = 'Забыли пароль?';
+$_['button_register_link']         = 'Создать аккаунт';
+$_['success_message']              = 'Поздравляем! Авторизация успешна';
 
 // Entry
-$_['entry_email']                  = 'E-Mail Address';
-$_['entry_password']               = 'Password';
+$_['entry_email']                  = 'E-Mail';
+$_['entry_password']               = 'Пароль';
 
 // Error
-$_['error_login']                  = 'Warning: No match for E-Mail Address and/or Password.';
-$_['error_attempts']               = 'Warning: Your account has exceeded allowed number of login attempts. Please try again in 1 hour.';
-$_['error_approved']               = 'Warning: Your account requires approval before you can login.';
+$_['error_login']                  = 'Неправильно заполнены поле E-Mail и/или пароль!';
+$_['error_attempts']               = 'Вы превысили максимальное количество попыток авторизации. Повторите попытку авторизации на сайте через 1 час';
+$_['error_approved']               = 'Необходимо подтвердить аккаунт перед авторизацией.';

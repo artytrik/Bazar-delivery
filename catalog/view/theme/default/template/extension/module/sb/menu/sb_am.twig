@@ -155,7 +155,7 @@
 </div>
 
 <script type="text/javascript"><!--
-$('#sb-{{ module }} .btn-toggle, #sb-{{ module }} .item-toggle').on('click', function(e) {
+$('#sb-{{ module }} .btn-toggle, #sb-{{ module }} .item-toggle::after').on('click', function(e) {
   e.preventDefault();
 
   var li = $(this).closest('li');
@@ -203,4 +203,10 @@ if ({{ save_view }}) {
     $(this).toggleClass('menu-expanded menu-collapsed').next().slideToggle(300);
   });
 }
+
+if(window.innerWidth < 992){
+    $(toggle).toggleClass('menu-expanded menu-collapsed').next().toggle();
+}
+
+
 //--></script>

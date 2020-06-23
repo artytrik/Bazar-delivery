@@ -499,12 +499,6 @@
 
     oczoom.initAdditionalImagesOwl();
 
-    $('.product-zoom-image').on('click', function () {
-        var pos = $('#light-box-position').val();
-
-        oczoom.openLightBox(pos);
-    });
-
     $('.sub-image').on('click', function () {
         var pos = $(this).data('pos');
         $('#light-box-position').val(pos);
