@@ -178,34 +178,20 @@
 										<div class="add-to-links">
 											<div class="quantity-box">
 												<div class="quantity-content">
-													<input type="button" id="plus{{ product.product_id }}" value="&#43;" class="input-quantity-plus"/>
-													<input type="text" name="quantity" value="1" size="2" id="input-quantity-{{ product.product_id }}" class="form-control input-quantity-tab" />					
-													<input type="button" id="minus{{ product.product_id }}" value="-" class="input-quantity-minus" disabled/>
+													<input type="button" id="plus{{ product.product_id }}" value="&#43;" class="input-quantity-plus"
+														onclick="cnahgeQuantityTab('plus', document.getElementById('input-quantity-{{ product.product_id }}').value, {{ product.product_id }}, parseInt('{{ product.price|e }}'.replace(/[^.\d]+/g,&#34;&#34;), 10), {{ product.weight }})"/>
+													<input type="text" name="quantity" value="1" size="2" id="input-quantity-{{ product.product_id }}" class="form-control input-quantity-tab" disabled/>					
+													<input type="button" id="minus{{ product.product_id }}" value="-" class="input-quantity-minus" disabled
+														onclick="cnahgeQuantityTab('minus', document.getElementById('input-quantity-{{ product.product_id }}').value, {{ product.product_id }}, parseInt('{{ product.price|e }}'.replace(/[^.\d]+/g,&#34;&#34;), 10), {{ product.weight }})"/>
 												</div>
 											</div>
 											<div class="cart">
-												<button class="cart-button{{ product.product_id }}" type="button" title="{{ button_cart }}"><span>{{ button_cart }}</span></button>
+												<button class="cart-button{{ product.product_id }}" type="button" title="{{ button_cart }}"
+													onclick="cart.add('{{ product.product_id }}', document.getElementById('input-quantity-{{ product.product_id }}').value);"
+												>
+													<span>{{ button_cart }}</span>
+												</button>
 											</div>
-											<script>
-												var oldPrice{{ product.product_id }} = parseInt('{{ product.price }}'.replace(/[^.\d]+/g,""), 10);
-												var plus{{ product.product_id }} = document.getElementById('plus{{ product.product_id }}');
-												var minus{{ product.product_id }} = document.getElementById('minus{{ product.product_id }}');
-												var buttonCart{{ product.product_id }} = document.querySelector('.cart-button{{ product.product_id }}');
-
-												minus{{ product.product_id }}.addEventListener('click', function() {
-													var elem{{ product.product_id }} =  document.getElementById('input-quantity-{{ product.product_id }}').value;
-													cnahgeQuantityTab('minus', elem{{ product.product_id }}, {{ product.product_id }}, oldPrice{{ product.product_id }}, {{ product.weight }});
-												});
-
-												plus{{ product.product_id }}.addEventListener('click', function() {
-													var elem{{ product.product_id }} =  document.getElementById('input-quantity-{{ product.product_id }}').value;
-													cnahgeQuantityTab('plus', elem{{ product.product_id }}, {{ product.product_id }}, oldPrice{{ product.product_id }}, {{ product.weight }});
-												});
-
-												buttonCart{{ product.product_id }}.addEventListener('click', function() {
-													cart.add('{{ product.product_id }}', document.getElementById('input-quantity-{{ product.product_id }}').value);
-												});
-											</script>
 											{#<div class="compare">
 												<button type="button" title="{{ button_compare }}" onclick="compare.add('{{ product.product_id }}');"><span>{{ button_compare }}</span></button>
 											</div>#}

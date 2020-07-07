@@ -2882,6 +2882,10 @@ header .container {
 	font-weight:400;
 	border-radius:0;
 }
+.input-quantity-tab:disabled {
+	background-color: #fff;
+}
+
 label[for='input-quantity']{
 	float: left;
 	line-height: 1;
