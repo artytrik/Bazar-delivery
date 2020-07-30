@@ -32,7 +32,7 @@ class ControllerCommonFooter extends Controller {
 		$data['powered'] = sprintf($this->language->get('text_powered'), $this->config->get('config_name'), date('Y', time()));
 
 		// Whos Online
-		if ($this->config->get('config_customer_online')) {
+		if ($this->config->get('')) {
 			$this->load->model('tool/online');
 
 			if (isset($this->request->server['REMOTE_ADDR'])) {

@@ -34,6 +34,7 @@ class ControllerCommonHeader extends Controller {
 		$data['scripts'] = $this->document->getScripts('header');
 		$data['lang'] = $this->language->get('code');
 		$data['direction'] = $this->language->get('direction');
+		$data['ip'] = $this->request->server['REMOTE_ADDR'];
 
 		$data['name'] = $this->config->get('config_name');
 
